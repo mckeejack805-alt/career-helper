@@ -24,7 +24,7 @@
   --bg:#0F1614; --surface:#17211E; --fg:#E4ECE8; --muted:#94A69E; --line:#2A3833;
   --accent:#5FC39C; --accent-soft:#1E3A30; --brass:#D9A94E; --warn:#E88B63; --warn-soft:#3A2419; color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font:16px/1.5 var(--body);font-weight:500;padding-inline:16px;padding-block:0 48px}
+body{background:var(--bg);color:var(--fg);font:16px/1.5 var(--body);font-weight:500;padding-inline:16px;padding-block:0 104px}
 .wrap{max-width:1100px;margin:0 auto}
 header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;padding-block:24px 12px;border-bottom:1px solid var(--line)}
 h1{font:700 1.9rem/1.1 var(--display);margin:0;letter-spacing:-.01em}
@@ -213,6 +213,10 @@ fieldset.range legend{font-weight:600;padding:0;margin-bottom:8px}
 #startOver.armed{border-color:var(--warn);color:var(--warn)}
 .resctl{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
 .savednote{margin:6px 0 0;color:var(--accent)}
+.nexttab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom, 0px));z-index:20;font:600 .88rem var(--body);background:var(--accent);color:var(--surface);border:0;border-radius:999px;padding:10px 16px;min-height:44px;max-width:calc(100vw - 32px);box-shadow:0 4px 14px rgba(0,0,0,.18);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.nexttab:hover{filter:brightness(1.08)}
+.nexttab:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){.nexttab{transition:transform .15s}.nexttab:active{transform:scale(.97)}}
 .profhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .btn.small{padding:6px 12px;font-size:.85rem}
 .empty.start{font-size:.95rem;line-height:1.55;color:var(--fg);background:var(--accent-soft);border-color:var(--accent-soft)}
@@ -541,6 +545,7 @@ ul.places{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;
     <div id="jobOut" style="display:flex;flex-direction:column;gap:20px"></div>
   </section>
 </div>
+<button type="button" id="nextTab" class="nexttab" hidden></button>
 
 <script>
 const $=id=>document.getElementById(id);
@@ -2347,11 +2352,19 @@ function renderFeedback(){
 
 // ---- tabs ----
 let currentView="match";
+const TAB_ORDER=[["match","Match"],["careers","Careers"],["certs","Certifications"],["sim","Simulation"],["jobs","Where to apply"],["fb","Feedback"]];
+function updateNextTab(v){
+  const b=$("nextTab"), i=TAB_ORDER.findIndex(t=>t[0]===v), nx=TAB_ORDER[i+1];
+  const ready=v!=="match"||!!$("major").value;
+  b.hidden=!nx||!ready;
+  if(nx){b.textContent=`Next: ${nx[1]} →`;b.dataset.to=nx[0];b.setAttribute("aria-label",`Go to the ${nx[1]} tab`);}
+}
 function show(v){
   currentView=v;
   document.querySelectorAll("nav button").forEach(x=>x.setAttribute("aria-selected",x.dataset.view===v));
   ["match","sim","careers","certs","jobs","fb"].forEach(k=>$("view-"+k).hidden=k!==v);
   renderProfileBar(v);
+  updateNextTab(v);
   if(v==="match")renderMatch(); if(v==="sim"){buildDayCareers();renderDay();} if(v==="careers")renderCareers(); if(v==="certs"){buildCertCareers();renderCerts();} if(v==="jobs"){buildJobCareers();renderJobs();} if(v==="fb")renderFeedback();
 }
 document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>{fromCareer=null;show(b.dataset.view);}));
@@ -2368,6 +2381,8 @@ function copyCities(toJobs){
 ["jobLoc","jtc1","jtc2","jtc3"].forEach(id=>$(id).addEventListener("change",()=>copyCities(false)));
 // Builder setting: load the example student on start. Set to false before sharing with students.
 const START_WITH_EXAMPLE=false;
+$("nextTab").addEventListener("click",e=>{const to=e.currentTarget.dataset.to;if(to){show(to);window.scrollTo({top:0});}});
+$("quiz").addEventListener("change",()=>{if(currentView==="match")updateNextTab("match");});
 // ---- save answers on this device ----
 const SAVE_KEY="careerHelper.answers.v1";
 function collectState(){
@@ -2429,6 +2444,7 @@ document.addEventListener("change",saveSoon);
 $("quiz").addEventListener("input",saveSoon);
 $("loadExample").addEventListener("click",saveSoon);
 if(!restoreSaved()&&START_WITH_EXAMPLE)$("loadExample").click();
+updateNextTab(currentView);
 </script>
 
 </body>
