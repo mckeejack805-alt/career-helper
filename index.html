@@ -549,7 +549,7 @@ ul.places{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;
 
 <script>
 const $=id=>document.getElementById(id);
-const MAJORS=["Finance","Accounting","Economics","Management","Marketing","Business Analytics","Other business major"];
+const MAJORS=["Finance","Accounting","Economics","Management","Marketing","Business Analytics","Professional Sales","Other business major"];
 const FIELDS=["Finance","Accounting","Marketing & Sales","Management & Analytics"];
 const INTERESTS=[
  ["markets","Markets & investing"],["individuals","Helping people manage money"],["deals","Mergers, acquisitions & deals"],
@@ -557,16 +557,16 @@ const INTERESTS=[
  ["accuracy","Making sure the numbers are right"],["taxes","Taxes & tax law"],["fraud","Investigating fraud"],
  ["brands","Brands & advertising"],["digital","Social media & online marketing"],["consumers","Understanding why customers buy"],
  ["selling","Selling & winning new customers"],["solving","Solving business problems"],["operations","How products get made & delivered"],
- ["people","Hiring & developing people"],["data","Finding insights in data"]];
+ ["people","Hiring & developing people"],["data","Finding insights in data"],["health","Healthcare & medicine"]];
 const SKILLS=[["modeling","Excel & financial modeling"],["communication","Communication"],["sales","Sales & persuasion"],["detail","Attention to detail"],["leadership","Leadership"],["analytical","Analytical problem solving"],["creativity","Creativity"],["datatools","Data tools (SQL, Tableau, Python)"],["organization","Organization & planning"]];
 const PREFS=[["people","Do you prefer working with people or analyzing information?","Analyzing information","Working with people"],["pace","Do you prefer a structured or fast-paced environment?","Structured","Fast-paced"],["hours","How do you weigh hours against pay upside?","Work-life balance","Long hours, higher pay upside"]];
 
 // m = majors that usually lead in (full credit); m2 = related majors that can also get there (partial credit)
 const CAREERS=[
- {id:"cb",f:"Finance",name:"Commercial Banking",p:{people:4,pace:2,hours:2},i:["lending","relationships"],s:["communication","analytical","detail"],m:["Finance","Economics"],m2:["Accounting"],
+ {id:"cb",f:"Finance",name:"Commercial Banking",p:{people:4,pace:2,hours:2},i:["lending","relationships"],s:["communication","analytical","detail"],m:["Finance","Economics"],m2:["Accounting","Professional Sales"],
   what:"Lends to and advises small and mid-sized companies. Analyze a business's financials, structure loans, and manage the relationship.",
   start:"Credit analyst, then relationship manager",path:"Bank credit training programs recruit juniors for internships and seniors for full-time analyst classes."},
- {id:"wm",f:"Finance",name:"Wealth Management",p:{people:5,pace:3,hours:3},i:["individuals","relationships","markets"],s:["communication","sales"],m:["Finance"],m2:["Economics"],
+ {id:"wm",f:"Finance",name:"Wealth Management",p:{people:5,pace:3,hours:3},i:["individuals","relationships","markets"],s:["communication","sales"],m:["Finance"],m2:["Economics","Professional Sales"],
   what:"Manages investments for wealthy individuals and families. Heavy on building a client book and explaining portfolio decisions.",
   start:"Client associate or junior advisor",path:"Many firms hire through internships and advisor development programs. The Series 7 and 66 licenses come after hiring."},
  {id:"ib",f:"Finance",name:"Investment Banking",p:{people:3,pace:5,hours:5},i:["deals","markets"],s:["modeling","detail","analytical"],m:["Finance","Economics"],m2:["Accounting"],
@@ -578,7 +578,7 @@ const CAREERS=[
  {id:"cf",f:"Finance",name:"Corporate Finance",p:{people:2,pace:2,hours:2},i:["strategy"],s:["modeling","analytical","detail"],m:["Finance","Accounting"],m2:["Economics","Business Analytics","Management"],
   what:"Works inside a company on budgeting, forecasting, and planning (often called FP&A). Helps leaders decide where to spend money.",
   start:"Financial analyst in a rotational or FP&A program",path:"Large companies run finance rotational programs that hire seniors, often through junior-year internships."},
- {id:"fp",f:"Finance",name:"Financial Planning",p:{people:5,pace:1,hours:1},i:["individuals","relationships"],s:["communication","detail","sales"],m:["Finance"],m2:["Accounting","Economics"],
+ {id:"fp",f:"Finance",name:"Financial Planning",p:{people:5,pace:1,hours:1},i:["individuals","relationships"],s:["communication","detail","sales"],m:["Finance"],m2:["Accounting","Economics","Professional Sales"],
   what:"Builds complete financial plans for households: budgeting, retirement, insurance, taxes, and estate basics.",
   start:"Associate planner or paraplanner",path:"Look for a CFP-registered program of study. The CFP certification requires coursework, an exam, and work experience."},
 
@@ -592,20 +592,20 @@ const CAREERS=[
   what:"Investigates fraud, financial crime, and business disputes. Traces money, rebuilds records, and explains findings to lawyers and courts.",
   start:"Forensic or investigations associate, often after 1 to 2 years in audit",path:"Some consulting firms hire forensic associates out of school. Many people start in audit, earn the CPA, then move over."},
 
- {id:"brand",f:"Marketing & Sales",name:"Brand Management",p:{people:4,pace:4,hours:3},i:["brands","consumers","strategy"],s:["creativity","communication","leadership","analytical"],m:["Marketing"],m2:["Management","Economics"],
+ {id:"brand",f:"Marketing & Sales",name:"Brand Management",p:{people:4,pace:4,hours:3},i:["brands","consumers","strategy"],s:["creativity","communication","leadership","analytical"],m:["Marketing"],m2:["Management","Economics","Professional Sales"],
   what:"Owns a product's image and growth: positioning, pricing, advertising, and launches. Works with sales, research, design, and agencies.",
   start:"Assistant brand manager or marketing rotational associate",path:"Large consumer products companies hire through junior-summer marketing internships. Many brand managers also go back for an MBA."},
- {id:"digital",f:"Marketing & Sales",name:"Digital Marketing",p:{people:3,pace:5,hours:2},i:["digital","brands"],s:["creativity","datatools","communication"],m:["Marketing"],m2:["Business Analytics","Management"],
+ {id:"digital",f:"Marketing & Sales",name:"Digital Marketing",p:{people:3,pace:5,hours:2},i:["digital","brands"],s:["creativity","datatools","communication"],m:["Marketing"],m2:["Business Analytics","Management","Professional Sales"],
   what:"Runs campaigns online: social media, search ads, email, and websites. Tracks the results and adjusts quickly.",
   start:"Digital or social media marketing coordinator",path:"Agencies and companies hire year-round. A portfolio matters more than timing, such as running a club's social accounts or a small ad campaign."},
  {id:"research",f:"Marketing & Sales",name:"Market Research",p:{people:2,pace:2,hours:2},i:["consumers","data"],s:["analytical","datatools","communication"],m:["Marketing","Business Analytics"],m2:["Economics"],
   what:"Studies customers and markets with surveys, interviews, and sales data, then turns findings into recommendations.",
   start:"Market research or consumer insights analyst",path:"Research firms and consumer companies hire seniors. Survey tools, Excel, and statistics coursework help you stand out."},
- {id:"sales",f:"Marketing & Sales",name:"B2B Sales",p:{people:5,pace:4,hours:3},i:["selling","relationships"],s:["sales","communication"],m:["Marketing","Management"],m2:["Finance","Economics","Business Analytics","Accounting"],
+ {id:"sales",f:"Marketing & Sales",name:"B2B Sales",p:{people:5,pace:4,hours:3},i:["selling","relationships"],s:["sales","communication"],m:["Marketing","Management","Professional Sales"],m2:["Finance","Economics","Business Analytics","Accounting"],
   what:"Sells products and services to other businesses, from software to industrial supplies. Pay often includes commission, so results drive income.",
   start:"Sales development representative (SDR)",path:"Hiring happens year-round and in large classes. Many companies run sales training programs for new grads."},
 
- {id:"consult",f:"Management & Analytics",name:"Management Consulting",p:{people:4,pace:5,hours:5},i:["solving","strategy"],s:["analytical","communication","leadership","modeling"],m:["Management","Economics","Finance"],m2:["Business Analytics","Marketing","Accounting"],
+ {id:"consult",f:"Management & Analytics",name:"Management Consulting",p:{people:4,pace:5,hours:5},i:["solving","strategy"],s:["analytical","communication","leadership","modeling"],m:["Management","Economics","Finance"],m2:["Business Analytics","Marketing","Accounting","Professional Sales"],
   what:"Advises companies on their biggest problems: growth, costs, operations, and strategy. Work is project-based and often involves travel.",
   start:"Business analyst or consulting analyst",path:"Like banking, recruiting is early. Junior-summer internships lead to offers, and case interview practice starts sophomore year."},
  {id:"supply",f:"Management & Analytics",name:"Operations & Supply Chain",p:{people:3,pace:4,hours:3},i:["operations","solving"],s:["organization","analytical","datatools","leadership"],m:["Management","Business Analytics"],m2:["Economics"],
@@ -616,7 +616,17 @@ const CAREERS=[
   start:"HR coordinator, recruiter, or HR rotational associate",path:"Many large companies run HR rotational programs for seniors. Recruiting coordinator roles hire year-round."},
  {id:"analyst",f:"Management & Analytics",name:"Business & Data Analytics",p:{people:2,pace:3,hours:2},i:["data","solving"],s:["datatools","analytical","detail"],m:["Business Analytics"],m2:["Economics","Finance","Accounting","Marketing","Management"],
   what:"Turns company data into answers: building dashboards, finding trends, and helping teams make decisions with numbers.",
-  start:"Data analyst or business analyst",path:"Hiring happens year-round. Projects that show SQL and Tableau or Power BI skills matter most."}
+  start:"Data analyst or business analyst",path:"Hiring happens year-round. Projects that show SQL and Tableau or Power BI skills matter most."},
+
+ {id:"med",f:"Marketing & Sales",name:"Medical & Pharmaceutical Sales",p:{people:5,pace:4,hours:3},i:["selling","relationships","health"],s:["sales","communication","analytical"],m:["Professional Sales","Marketing"],m2:["Management","Business Analytics","Finance","Economics"],
+  what:"Sells medical devices, equipment, or medicines to doctors, hospitals, and clinics. Reps learn their products deeply and often support surgeons during procedures.",
+  start:"Associate sales representative or sales trainee",path:"Many device and pharma companies hire new grads into associate rep programs. Sales internships and any healthcare experience help a lot."},
+ {id:"acctmgmt",f:"Marketing & Sales",name:"Account Management / Customer Success",p:{people:5,pace:3,hours:2},i:["relationships","selling","solving"],s:["communication","organization","sales"],m:["Professional Sales","Marketing","Management"],m2:["Business Analytics","Finance","Economics","Accounting"],
+  what:"Keeps existing clients happy and growing: onboarding them, solving their problems, and finding ways to help them buy more.",
+  start:"Associate account manager or customer success associate",path:"Companies hire year-round, often in new-grad classes. Customer-facing internships and strong communication skills matter most."},
+ {id:"insure",f:"Marketing & Sales",name:"Commercial Insurance Sales",p:{people:4,pace:3,hours:2},i:["selling","relationships","strategy"],s:["sales","communication","detail"],m:["Professional Sales","Finance"],m2:["Marketing","Management","Economics","Accounting"],
+  what:"Helps businesses protect themselves by finding the right insurance for property, liability, and employees, then managing those accounts as they renew each year.",
+  start:"Producer trainee or commercial lines account manager",path:"Large insurance brokers run sales trainee programs for seniors, often through junior-year internships. You earn a state insurance license after you're hired."}
 ];
 
 function fit(c,major){if(major==="Other business major")return .7;return c.m.includes(major)?1:c.m2.includes(major)?.7:.3;}
@@ -637,6 +647,8 @@ const B={
  mgmt:{occ:"Management analysts",med:101860,p10:60640,p90:171640,g:10,url:OOH+"business-and-financial/management-analysts.htm"},
  log:{occ:"Logisticians",med:82320,p10:50890,p90:133160,g:18,url:OOH+"business-and-financial/logisticians.htm"},
  hr:{occ:"Human resources specialists",med:75940,p10:47180,p90:128720,g:6,url:OOH+"business-and-financial/human-resources-specialists.htm"},
+ salesTech:{occ:"Technical and scientific products sales representatives",med:104920,p10:52600,p90:200440,g:1,url:OOH+"sales/wholesale-and-manufacturing-sales-representatives.htm"},
+ ins:{occ:"Insurance sales agents",med:62280,p10:37330,p90:138140,g:3,url:OOH+"sales/insurance-sales-agents.htm"},
  ora:{occ:"Operations research analysts",med:88940,p10:57060,p90:159910,g:12,url:OOH+"math/operations-research-analysts.htm"}
 };
 const NACE="https://www.naceweb.org/job-market/compensation/class-of-2026-salary-projections-are-promising";
@@ -659,6 +671,9 @@ const SAL={
  consult:{bls:B.mgmt,src:[["Management Consulted: average of 15 firms' undergrad base salaries",MC,100767],["Poets&Quants: average of 8 firms' undergrad base salaries","https://poetsandquantsforundergrads.com/students/consulting-pay-what-business-graduates-earned-in-2025/",103625],["Big 4 Events: Big 4 advisory, midpoint of $82k–$105k",B4,93500]],note:"Base salary. McKinsey, BCG, and Bain pay about $110k–$112k; Big Four consulting about $78k–$95k."},
  supply:{bls:B.log,src:[["ZipRecruiter: Entry Level Supply Chain Analyst",ZR+"Entry-Level-Supply-Chain-Analyst-Salary",74386],["Payscale: Supply Chain Analyst, under 1 year",PS+"Supply_Chain_Analyst/Salary",63684]]},
  hr:{bls:B.hr,src:[["ZipRecruiter: Entry Level HR Coordinator",ZR+"Entry-Level-HR-Coordinator-Salary",49866],["Payscale: HR Coordinator, under 1 year",PS+"Human_Resources_(HR)_Coordinator/Salary",49729]]},
+ med:{bls:B.salesTech,src:[["ZipRecruiter: Entry Level Medical Sales Representative",ZR+"Entry-Level-Medical-Sales-Representative-Salary",63444],["Payscale: Medical Device Sales Representative, under 1 year",PS+"Medical_Device_Sales_Representative/Salary",56543]],note:"Base pay. Commission adds a lot: MedReps reports average total pay of about $98k for medical reps with 0 to 2 years of experience (via Medical Sales College)."},
+ acctmgmt:{bls:B.sales,src:[["ZipRecruiter: Junior Account Manager",ZR+"Junior-Account-Manager-Salary",49188],["Payscale: Account Manager, under 1 year",PS+"Account_Manager/Salary",54432]]},
+ insure:{bls:B.ins,src:[["ZipRecruiter: Entry Level Insurance Sales",ZR+"Entry-Level-Insurance-Sales-Salary",45046],["Payscale: Insurance Sales Agent, under 1 year",PS+"Insurance_Sales_Agent/Salary",40291]],note:"Trainee programs at large commercial brokers often pay more, and commission grows as you build your own clients."},
  analyst:{bls:B.ora,src:[["ZipRecruiter: Entry Level Data Analyst",ZR+"Entry-Level-Data-Analyst-Salary",68487],["Payscale: Data Analyst, under 1 year",PS+"Data_Analyst/Salary",63574]],note:"BLS has no separate data analyst category; operations research analysts is the closest."}
 };
 // ---- about 5 years in: typical title, pay (average of sources), and how the path works ----
@@ -696,6 +711,12 @@ const FIVE={
   path:"Years 1–2: analyst forecasting demand and tracking inventory. Years 3–5: senior analyst or supply chain manager running a product line, warehouse, or group of suppliers."},
  hr:{title:"HR generalist",src:[["Payscale: HR Generalist",PS+"Human_Resources_(HR)_Generalist/Salary",63650],["ZipRecruiter: Human Resources Generalist",ZR+"Human-Resources-Generalist-Salary",65839]],
   path:"Years 1–2: HR coordinator or recruiter. Years 3–5: HR generalist handling employee issues, benefits, and policies. The next step, HR business partner, advises leaders directly and usually pays more."},
+ med:{title:"Medical sales representative",src:[["Payscale: Medical Device Sales Representative, base",PS+"Medical_Device_Sales_Representative/Salary",65447],["ZipRecruiter: Medical Device Sales Representative",ZR+"Medical-Device-Sales-Representative-Salary",65106]],
+  path:"Year 1: associate rep, learning products and anatomy, shadowing senior reps in hospitals, and covering smaller accounts. Years 2 to 5: your own territory and quota. Base pay grows slowly. Most of the increase comes from commission, which is why total pay often reaches well into six figures. Glassdoor's median total pay for device reps is about $157k."},
+ acctmgmt:{title:"Account manager or customer success manager",src:[["ZipRecruiter: Customer Success Manager",ZR+"Customer-Success-Manager-Salary",83064],["Payscale: Senior Account Manager",PS+"Senior_Account_Manager/Salary",84250]],
+  path:"Years 1 to 2: associate account manager handling smaller clients and learning the product. Years 3 to 5: account manager or customer success manager for larger clients, often with bonuses tied to renewals and growth. Next steps are senior or enterprise account manager, or leading a team."},
+ insure:{title:"Commercial insurance producer",src:[["ZipRecruiter: Commercial Insurance Producer",ZR+"Commercial-Insurance-Producer-Salary",103576],["ZipRecruiter: Insurance Account Executive",ZR+"Insurance-Account-Executive-Salary",73951],["Payscale: Insurance Account Executive",PS+"Insurance_Account_Executive/Salary",57121]],
+  path:"Year 1: producer trainee, earning your license and supporting senior producers. Years 2 to 5: your own clients and a growing book of business. Commission on renewals means your pay keeps rising as long as you keep clients, so strong producers earn far above average."},
  analyst:{title:"Senior data analyst",src:[["Payscale: Senior Data Analyst",PS+"Senior_Data_Analyst/Salary",94958],["ZipRecruiter: Senior Data Analyst",ZR+"Senior-Data-Analyst-Salary",99231]],
   path:"Years 1–2: data analyst building reports and dashboards. Years 3–5: senior analyst leading projects. Some move into data science or analytics management."}
 };
@@ -747,6 +768,10 @@ const NEEDS={
  supply:[["cscp","opt","The best-known supply chain credential. Open to anyone, so you can earn it early to stand out."],
          ["lss","opt","Teaches a step-by-step method for cutting waste and errors. Operations teams value it highly."]],
  hr:[["shrm","opt","Many HR job postings list it as preferred. Students can take it before graduating."]],
+ med:[],
+ acctmgmt:[],
+ insure:[["pc","req","Every state requires a license to sell insurance. Most employers have you pass the property and casualty exam within your first few months."],
+         ["cpcu","opt","The best-known advanced credential in property and casualty insurance. It shows clients and employers deep expertise."]],
  analyst:[["gdata","opt","A beginner-friendly program covering spreadsheets, SQL, Tableau, and R."],
           ["pl300","opt","Proves you can build reports and dashboards in Power BI, which many companies use."]]
 };
@@ -867,6 +892,18 @@ const CERTS={
   facts:[["Format","Training plus an exam"],["Providers","ASQ is the most recognized"],["Project","Some programs require a real project"],["Good in school?","Yes, some schools offer it"]],
   steps:["Choose a provider. ASQ's Certified Six Sigma Green Belt is widely recognized.","Complete training on the improvement method and basic statistics.","Pass the exam, and complete a project if your program requires one."],
   link:"https://asq.org/cert/six-sigma-green-belt"},
+ pc:{g:"Insurance",name:"P&C License",full:"Property & Casualty Insurance Producer License",by:"State departments of insurance",
+  what:"A state license that lets you sell property and casualty insurance, the coverage businesses buy for buildings, equipment, vehicles, and liability.",
+  applied:"You need it to quote, sell, and service insurance policies for clients. Without it, you can support a producer but not sell on your own.",
+  facts:[["Exam","One state licensing exam"],["Prep","Pre-licensing course in many states"],["Who pays","Employers often cover it"],["Renewal","Continuing education, usually every 2 years"]],
+  steps:["Check your state's insurance department rules. Many require a pre-licensing course.","Study property and casualty basics and your state's insurance laws.","Pass the state licensing exam and the background check.","Apply for the license, then keep it active with continuing education."],
+  link:"https://content.naic.org/state-insurance-departments"},
+ cpcu:{g:"Insurance",name:"CPCU",full:"Chartered Property Casualty Underwriter",by:"The Institutes",
+  what:"An advanced designation covering insurance law, risk management, and commercial or personal insurance in depth.",
+  applied:"Producers, underwriters, and account managers use it to advise clients on complex coverage and to stand out for promotions.",
+  facts:[["Format","8 courses, each with an exam"],["Focus","Commercial or personal insurance"],["Pace","Self-paced, online"],["Ethics","Code of ethics required"]],
+  steps:["Enroll with The Institutes and choose the commercial or personal focus.","Complete the courses and pass each exam at your own pace.","Meet the experience and ethics requirements.","Receive the designation."],
+  link:"https://web.theinstitutes.org/agents-and-brokers/CPCU"},
  shrm:{g:"Operations & HR",name:"SHRM-CP",full:"SHRM Certified Professional",by:"Society for Human Resource Management",
   what:"The most common HR certification, covering recruiting, employee relations, benefits, HR law, and workplace strategy.",
   applied:"HR professionals use this knowledge to hire fairly, handle employee issues, follow employment law, and design pay and benefits.",
@@ -1063,7 +1100,7 @@ const WEEK_HRS={
  cb:["45–50"],wm:["45–50"],ib:["70–80","often more during live deals"],pe:["60–70"],cf:["45–50","more during month-end close"],fp:["40–45"],
  audit:["45–50","55–70 during busy season, January to April"],tax:["45–50","55–65 during tax season, February to April"],forensic:["45–50","more before court deadlines"],
  brand:["45–50"],digital:["40–45"],research:["40–45"],sales:["45–50"],consult:["55–65","plus travel, often Monday to Thursday"],
- supply:["45–50"],hr:["40–45"],analyst:["40–45"]
+ supply:["45–50"],hr:["40–45"],analyst:["40–45"],med:["45–50","including travel and early surgery cases"],acctmgmt:["40–45"],insure:["40–45","more during busy renewal seasons"]
 };
 let careerOpen=null;
 function renderCareers(){
@@ -1264,6 +1301,25 @@ const JOBS={
   {city:"Minneapolis, MN",r:"mn",note:"Retail and food companies with large HR teams.",cos:[["Target","Retail"],["General Mills","Consumer goods"]]},
   {city:"Atlanta, GA",r:"ga",note:"Big employers with thousands of workers to hire and support.",cos:[["The Home Depot","Retail"],["Delta Air Lines","Airline"]]},
   {city:"Every city",r:"nat",note:"Every sizable company has an HR team, and staffing firms hire recruiters everywhere.",cos:[["ADP","HR services"],["Paychex","HR services"],["Robert Half","Staffing"]]}]},
+ med:{kw:"associate sales representative medical",hubs:[
+  {city:"Minneapolis, MN",r:"mn",note:"A major medical device hub.",cos:[["Medtronic","Medical devices"],["Boston Scientific","Medical devices"]]},
+  {city:"Chicago, IL",r:"il",note:"Large device and pharmaceutical headquarters.",cos:[["Abbott","Medical devices"],["Baxter","Medical devices"],["AbbVie","Pharmaceuticals"]]},
+  {city:"New York, NY",r:"ny",note:"Pharmaceutical and device companies in the New York and New Jersey area.",cos:[["Pfizer","Pharmaceuticals"],["Johnson & Johnson MedTech","Medical devices"],["Merck","Pharmaceuticals"]]},
+  {city:"Kalamazoo, MI",r:"x",note:"Home of Stryker.",cos:[["Stryker","Medical devices"]]},
+  {city:"Indianapolis, IN",r:"x",note:"Home of Eli Lilly.",cos:[["Eli Lilly","Pharmaceuticals"]]},
+  {city:"Boston, MA",r:"ma",note:"Medical device and biotech companies.",cos:[["Boston Scientific","Medical devices"]]},
+  {city:"Nationwide",r:"nat",note:"Reps cover territories in every region.",cos:[]}]},
+ acctmgmt:{kw:"account manager",hubs:[
+  {city:"San Francisco, CA",r:"ca",note:"Software companies with large customer success teams.",cos:[["Salesforce","Software"]]},
+  {city:"Austin, TX",r:"tx",note:"Tech companies with big account teams.",cos:[["Oracle","Software"],["Dell Technologies","Technology"]]},
+  {city:"Dallas, TX",r:"tx",note:"Research and business services firms.",cos:[["Gartner","Research & advisory"]]},
+  {city:"Nationwide",r:"nat",note:"Account management jobs exist in every city.",cos:[]}]},
+ insure:{kw:"commercial insurance producer",hubs:[
+  {city:"New York, NY",r:"ny",note:"Headquarters of the largest insurance brokers.",cos:[["Marsh McLennan","Insurance brokerage"],["AIG","Insurance carrier"]]},
+  {city:"Chicago, IL",r:"il",note:"Major broker headquarters.",cos:[["Aon","Insurance brokerage"],["Gallagher","Insurance brokerage"]]},
+  {city:"Kansas City, MO",r:"mo",note:"Home of Lockton, one of the largest private brokers.",cos:[["Lockton","Insurance brokerage"]]},
+  {city:"Hartford, CT",r:"x",note:"Known as the insurance capital of the U.S.",cos:[["Travelers","Insurance carrier"],["The Hartford","Insurance carrier"]]},
+  {city:"Nationwide",r:"nat",note:"Brokers have offices in nearly every city.",cos:[]}]},
  analyst:{kw:"data analyst",hubs:[
   {city:"Seattle, WA",r:"wa",note:"Huge analytics teams at major tech companies.",cos:[["Amazon","Technology"],["Microsoft","Technology"]]},
   {city:"California",r:"ca",note:"Tech companies built on data.",cos:[["Google","Technology","San Francisco"],["Meta","Technology","San Francisco"],["Salesforce","Software","San Francisco"]]},
@@ -1271,7 +1327,7 @@ const JOBS={
   {city:"New York, NY",r:"ny",note:"Finance and media companies.",cos:[["JPMorgan Chase","Banking"],["American Express","Financial services"]]},
   {city:"Remote & every city",r:"nat",note:"Data analyst jobs exist in every industry, and many are hybrid or remote.",cos:[]}]}
 };
-const INTERN_KW={cb:"commercial banking intern",wm:"wealth management intern",ib:"investment banking summer analyst",pe:"private equity intern",cf:"finance intern",fp:"financial planning intern",audit:"audit intern",tax:"tax intern",forensic:"forensic accounting intern",brand:"brand management intern",digital:"digital marketing intern",research:"market research intern",sales:"sales intern",consult:"consulting intern",supply:"supply chain intern",hr:"human resources intern",analyst:"data analyst intern"};
+const INTERN_KW={cb:"commercial banking intern",wm:"wealth management intern",ib:"investment banking summer analyst",pe:"private equity intern",cf:"finance intern",fp:"financial planning intern",audit:"audit intern",tax:"tax intern",forensic:"forensic accounting intern",brand:"brand management intern",digital:"digital marketing intern",research:"market research intern",sales:"sales intern",consult:"consulting intern",supply:"supply chain intern",hr:"human resources intern",analyst:"data analyst intern",med:"medical sales intern",acctmgmt:"account management intern",insure:"insurance sales intern"};
 const enc=encodeURIComponent;
 const li=(q,l)=>`https://www.linkedin.com/jobs/search/?keywords=${enc(q)}&location=${enc(l)}`;
 const blankUS=l=>l==="United States"?"":l;
@@ -1792,6 +1848,82 @@ const DAY={
   like:"You care about people, fairness, and organization.",
   hard:"You dislike difficult conversations. HR handles sensitive issues."},
 
+ med:{co:"Lakeview Medical",role:"Associate sales representative",where:"Orthopedic device team covering hospitals in the Dallas area",hours:"6:30 AM – 5:30 PM",
+  steps:[
+   {t:"6:30 AM",h:"An early surgery",p:"You meet your senior rep at a hospital for a knee replacement that uses your company's implants. Your job is to make sure every instrument and implant size is ready, and to learn by watching."},
+   {t:"8:30 AM",h:"In the operating room",p:"The surgery is underway, and the surgeon turns to you.",
+    q:"The surgeon asks you which implant size to use. What do you say?",
+    o:[["Say the size is the surgeon's call, and offer the sizing information your company provides.","best","Reps support, but never make medical decisions. Knowing that line is what earns a surgeon's trust."],
+       ["Suggest a size based on what you've seen in other cases.","no","Recommending a medical choice is outside your role and could put the patient at risk."],
+       ["Ask your senior rep to answer instead.","ok","Fine, but the right answer is still that the surgeon decides. Your job is product information."]]},
+   {t:"10:30 AM",h:"Meeting the hospital buyer",p:"You meet the hospital's purchasing manager about renewing its contract.",
+    q:"The buyer says a competitor offered a price 15% lower. How do you respond?",
+    o:[["Ask what matters besides price, and show the full value: support, results, and fewer delays in surgery.","best","Strong reps compete on value. Understanding the buyer's needs comes before talking price."],
+       ["Match the price on the spot.","no","Reps usually can't change pricing alone, and leading with a discount gives away value."],
+       ["Say you'll check with your manager.","ok","Reasonable, but learn what the buyer cares about first."]]},
+   {t:"12:30 PM",h:"Lunch on the road",p:"You eat in the car while driving to the next account. Medical reps spend a lot of time driving around their territory."},
+   {t:"1:30 PM",h:"A clinic visit",p:"You stop by an orthopedic clinic to see a doctor who could use your products.",
+    q:"The front desk says the doctor is too busy to meet today. What do you do?",
+    o:[["Ask the staff for a better time to come back, and leave a short, useful note on the product.","best","Office staff control access. Respecting their time builds the relationships that matter most."],
+       ["Wait in the lobby until the doctor walks by.","no","Pushy visits hurt relationships, and offices remember."],
+       ["Email the doctor directly instead.","ok","Sometimes fine, but the staff relationship is key in medical sales."]]},
+   {t:"3:30 PM",h:"Product training",p:"You study anatomy and product details for the company's internal certification. New reps spend months learning before covering surgeries on their own."},
+   {t:"5:30 PM",h:"Wrapping up",p:"You log today's visits in the sales system and plan tomorrow's route."}],
+  split:[["Hospitals and procedures",35],["Driving between accounts",20],["Customer meetings",20],["Product training",15],["Admin and records",10]],
+  like:"You're interested in healthcare, enjoy building relationships, and want to earn more when you perform well.",
+  hard:"You want a predictable schedule. Early mornings, travel, and on-call surgeries are common."},
+
+ acctmgmt:{co:"Brightline Payroll Software",role:"Associate account manager",where:"Customer success team at a payroll software company, Chicago",hours:"8:30 AM – 5:00 PM",
+  steps:[
+   {t:"8:30 AM",h:"Checking in on clients",p:"You manage 40 small-business clients. Three emailed overnight with questions about running payroll."},
+   {t:"9:00 AM",h:"An urgent problem",p:"One email stands out.",
+    q:"A client's payroll failed to run, and their employees get paid tomorrow. What do you do?",
+    o:[["Call them right away, bring in the support team, and stay on it until it's fixed.","best","Owning the problem when it matters most is what keeps clients for years."],
+       ["Reply that you'll look into it later this week.","no","Employees not getting paid is an emergency. Waiting could lose the client."],
+       ["Forward it to support and move on.","ok","Support can fix it, but you own the relationship. Follow through."]]},
+   {t:"10:30 AM",h:"Onboarding a new client",p:"You walk a new client through setting up their account and adding employees."},
+   {t:"12:00 PM",h:"Lunch",p:"Lunch with your team."},
+   {t:"1:00 PM",h:"Quarterly check-in",p:"You meet with a growing client to review how things are going.",
+    q:"The client says they're hiring 20 more people this year. What do you do?",
+    o:[["Ask about their plans and suggest the HR add-on that fits, showing how much time it would save.","best","Growing accounts by solving real needs is the heart of account management."],
+       ["Push the most expensive package.","no","Overselling hurts trust and often leads to cancellations."],
+       ["Congratulate them and move on.","ok","Good relationship, but you missed a chance to help them grow."]]},
+   {t:"3:00 PM",h:"A quiet account",p:"You review which clients are using the product less.",
+    q:"A client hasn't logged in for a month, and their contract renews in 60 days. What do you do?",
+    o:[["Reach out now to learn why, and offer a short training session.","best","Spotting risk early is how account managers keep clients from leaving."],
+       ["Wait until the renewal date.","no","By then, they may have already chosen a competitor."],
+       ["Send a generic reminder email.","ok","Better than nothing, but a personal call works much better."]]},
+   {t:"4:30 PM",h:"Wrapping up",p:"You update client notes and plan tomorrow's calls."}],
+  split:[["Client calls and emails",40],["Solving client problems",25],["Onboarding new clients",15],["Team meetings",10],["Updating records",10]],
+  like:"You like helping people, solving problems, and building long-term relationships, with steadier hours than pure sales.",
+  hard:"You want big commission upside. Pay is steadier but usually grows more slowly than in new-business sales."},
+
+ insure:{co:"Harborline Insurance Brokers",role:"Producer trainee",where:"Commercial insurance team at an insurance broker, Atlanta",hours:"8:00 AM – 5:00 PM",
+  steps:[
+   {t:"8:00 AM",h:"Team meeting",p:"The team reviews which client policies renew this month and who needs a call."},
+   {t:"8:30 AM",h:"A renewal problem",p:"You look at one of your senior producer's clients.",
+    q:"A restaurant's insurance renews next month, and the price is going up 20%. What do you do?",
+    o:[["Shop the policy with other insurance companies, then explain the options and why prices rose.","best","Brokers work for the client. Comparing options shows them you're on their side."],
+       ["Just renew it. They'll probably accept.","no","Surprising a client with a big increase is a quick way to lose them."],
+       ["Tell them prices are up everywhere.","ok","Often true, but shopping the policy shows you're working for them."]]},
+   {t:"10:30 AM",h:"Finding new clients",p:"You research local construction companies and call three of them to introduce the firm."},
+   {t:"12:00 PM",h:"Lunch with a senior producer",p:"Your mentor explains how they built their client list over ten years."},
+   {t:"1:00 PM",h:"A client visit",p:"You join a meeting with a construction company owner.",
+    q:"The owner wants the cheapest policy possible. What do you do?",
+    o:[["Explain which coverage they truly need, like liability for job sites, and look for savings elsewhere.","best","Good producers protect clients from gaps they don't see. That trust keeps clients for years."],
+       ["Sell the cheapest policy without explaining what's missing.","no","If something goes wrong, the client may be uncovered, and you're responsible for advising them."],
+       ["Refuse to quote anything cheap.","ok","Too rigid. Help them find savings without dangerous gaps."]]},
+   {t:"3:00 PM",h:"License studying",p:"You spend an hour preparing for the property and casualty licensing exam, which you need to pass in your first few months."},
+   {t:"4:00 PM",h:"A client calls",p:"Your phone rings.",
+    q:"A client reports a kitchen fire at their restaurant. What do you do?",
+    o:[["Help them start the claim right away, explain the next steps, and follow up with the insurance company.","best","Being there when something goes wrong is what clients remember most."],
+       ["Tell them to call the insurance company themselves.","no","Brokers guide clients through claims. Leaving them alone hurts the relationship."],
+       ["Email them the claim form.","ok","Helpful, but a call shows you're there when it matters."]]},
+   {t:"5:00 PM",h:"Wrapping up",p:"You log today's calls and head home."}],
+  split:[["Client calls and visits",30],["Finding new clients",25],["Comparing quotes",20],["Studying and training",15],["Admin",10]],
+  like:"You like building relationships with business owners and earning more as your list of clients grows.",
+  hard:"You dislike cold calling or studying for licensing exams early on."},
+
  analyst:{co:"Brookline Retail",role:"Data analyst",where:"Analytics team at a retail company, Seattle",hours:"8:30 AM – 5:00 PM",
   steps:[
    {t:"8:30 AM",h:"A broken dashboard",p:"The sales dashboard shows zero sales for one region."},
@@ -2073,6 +2205,9 @@ const BROAD_RAW={
  consult:"Deloitte|Big Four; PwC|Big Four; EY|Big Four; KPMG|Big Four; Accenture|Technology & ops; Slalom|Technology & ops; Huron|Consulting; Protiviti|Consulting",
  sales:"ADP|Payroll & HR; Paychex|Payroll & HR; Enterprise Mobility|Management trainee; Grainger|Industrial supply; Fastenal|Industrial supply; Cintas|Business services; Sherwin-Williams|Retail; Sysco|Food distribution",
  hr:"Robert Half|Staffing; Randstad|Staffing; Adecco|Staffing; ManpowerGroup|Staffing; Kelly Services|Staffing; ADP|HR services; Paychex|HR services; Insperity|HR services",
+ med:"Stryker|Medical devices; Medtronic|Medical devices; Johnson & Johnson MedTech|Medical devices; Boston Scientific|Medical devices; Abbott|Medical devices; Zimmer Biomet|Medical devices; Pfizer|Pharmaceuticals; Merck|Pharmaceuticals",
+ acctmgmt:"ADP|Payroll & HR; Paychex|Payroll & HR; Cintas|Business services; Gartner|Research & advisory; Salesforce|Software; Oracle|Software; Insperity|HR services; Enterprise Mobility|Management trainee",
+ insure:"Marsh McLennan|Insurance brokerage; Aon|Insurance brokerage; Gallagher|Insurance brokerage; Brown & Brown|Insurance brokerage; USI Insurance Services|Insurance brokerage; Hub International|Insurance brokerage; Lockton|Insurance brokerage; Travelers|Insurance carrier",
  supply:"Amazon|E-commerce; Walmart|Retail; UPS|Logistics; FedEx|Logistics; Target|Retail; The Home Depot|Retail; Sysco|Food distribution; Ryder|Logistics"
 };
 const broadFirms=cid=>BROAD_RAW[cid]?BROAD_RAW[cid].split(";").map(x=>x.trim().split("|")):JOBS[cid].hubs.filter(h=>h.r==="nat").flatMap(h=>h.cos);
@@ -2092,9 +2227,11 @@ const TOPM={
  mgmt:{occ:"management analysts (consultants)",url:OEWS+"131111.htm",rows:[["Washington, D.C.","DC",71340],["New York City","NY",59490],["Chicago","IL",37500],["Los Angeles–Orange County","CA",37480],["Boston","MA",26990]]},
  log:{occ:"logisticians",url:OEWS+"131081.htm",rows:[["Los Angeles–Orange County","CA",10150],["New York City","NY",8730],["Chicago","IL",7780],["Dallas–Fort Worth","TX",7020],["Detroit","MI",6730]]},
  hr:{occ:"human resources specialists",url:OEWS+"131071.htm",rows:[["New York City","NY",52760],["Los Angeles–Orange County","CA",33470],["Dallas–Fort Worth","TX",28180],["Washington, D.C.","DC",27340],["Chicago","IL",25790]]},
+ techsales:{occ:"technical and scientific products sales representatives (the BLS group that includes medical device reps)",url:OEWS+"414011.htm",rows:[["Dallas–Fort Worth","TX",18810],["Seattle","WA",11960],["Austin","TX",10650],["New York City","NY",9310],["Houston","TX",9290]]},
+ ins:{occ:"insurance sales agents",url:OEWS+"413021.htm",rows:[["New York City","NY",19190],["Dallas–Fort Worth","TX",16140],["Los Angeles–Orange County","CA",12860],["Miami","FL",12360],["Chicago","IL",12310]]},
  ora:{occ:"operations research analysts",url:OEWS+"152031.htm",rows:[["Washington, D.C.","DC",8610],["New York City","NY",7160],["Dallas–Fort Worth","TX",4820],["Chicago","IL",4090],["Atlanta","GA",3670]]}
 };
-const TOP_FOR={cb:"credit",wm:"pfa",fp:"pfa",ib:"sec",pe:"fin",cf:"fin",audit:"acct",tax:"acct",forensic:"acct",brand:"mkm",digital:"mra",research:"mra",sales:"sales",consult:"mgmt",supply:"log",hr:"hr",analyst:"ora"};
+const TOP_FOR={cb:"credit",wm:"pfa",fp:"pfa",ib:"sec",pe:"fin",cf:"fin",audit:"acct",tax:"acct",forensic:"acct",brand:"mkm",digital:"mra",research:"mra",sales:"sales",consult:"mgmt",supply:"log",hr:"hr",analyst:"ora",med:"techsales",acctmgmt:"sales",insure:"ins"};
 // Top 5 metros for a career, each with matching employers from our lists.
 function nationalTop(cid){
   const T=TOPM[TOP_FOR[cid]], hubs=JOBS[cid].hubs, everywhere=broadFirms(cid);
@@ -2163,6 +2300,10 @@ const TYPE_NOTE={
  "Food distribution":"Delivers food to restaurants and stores. High volume with thin margins.",
  "Tax preparation":"Prepares tax returns for individuals and small businesses. Busiest from January to April.",
  "Business services":"Provides uniforms, supplies, and services to other businesses, with route-based sales territories.",
+ "Medical devices":"A medical device company. Reps support surgeons in hospitals and cover a territory.",
+ "Pharmaceuticals":"A drug company. Reps visit doctors' offices to explain medicines and keep relationships strong.",
+ "Insurance brokerage":"An insurance broker. You work for the client, comparing coverage from many insurance companies.",
+ "Insurance carrier":"An insurance company that writes the policies itself. More structured training, with a focus on its own products.",
  "Software":"A software company. Fast-growing, data-driven, and often flexible about remote work.",
  "Hospitality":"A hotel or hospitality company with properties around the world.",
  "Travel":"A travel company where demand swings with the seasons and the economy.",
