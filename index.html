@@ -209,6 +209,10 @@ fieldset.range{border:0;margin:0;padding:0;display:flex;flex-direction:column;ga
 fieldset.range legend{font-weight:600;padding:0;margin-bottom:8px}
 .empty{padding:14px;border:1px dashed var(--line);border-radius:10px;font-size:.92rem;color:var(--muted)}
 .fithead{margin:0;font:700 1.5rem/1.2 var(--display);color:var(--accent);background:var(--accent-soft);padding:4px 12px;border-radius:8px}
+.profbtns{display:flex;gap:8px;flex-wrap:wrap}
+#startOver.armed{border-color:var(--warn);color:var(--warn)}
+.resctl{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.savednote{margin:6px 0 0;color:var(--accent)}
 .profhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .btn.small{padding:6px 12px;font-size:.85rem}
 .empty.start{font-size:.95rem;line-height:1.55;color:var(--fg);background:var(--accent-soft);border-color:var(--accent-soft)}
@@ -365,8 +369,9 @@ ul.places{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;
   <section id="view-match" class="grid">
     <form class="panel" id="quiz" onsubmit="return false">
       <div>
-        <div class="profhead"><h2>Your profile</h2><button class="btn ghost small" type="button" id="loadExample">See an example</button></div>
+        <div class="profhead"><h2>Your profile</h2><div class="profbtns"><button class="btn ghost small" type="button" id="loadExample">See an example</button><button class="btn ghost small" type="button" id="startOver">Start over</button></div></div>
         <p class="note">Answer the questions below and your matches update as you go. Your major decides which careers you see.</p>
+        <p class="note savednote" id="savedNote" hidden>Your answers are saved on this device, so you can come back to them later.</p>
       </div>
       <div class="row2">
         <label class="field">Major
@@ -398,7 +403,7 @@ ul.places{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;
 
     <div class="results">
       <div class="reshead"><h2 class="fithead">Your fit scores</h2>
-        <label class="sortby" for="sortBy">Sort by <select id="sortBy"><option value="fit">Fit score</option><option value="pay">Starting pay</option></select></label></div>
+        <div class="resctl"><label class="sortby" for="sortBy">Sort by <select id="sortBy"><option value="fit">Fit score</option><option value="pay">Starting pay</option></select></label><button class="jlink" type="button" id="resetFilters">Reset filters</button></div></div>
       <p class="scope" id="scope"></p>
       <div id="why" class="why"></div>
       <div id="ranked" class="results"></div>
@@ -2241,6 +2246,7 @@ function cityRow(r,ri,meta,count,inner,rank,before){
      ${open?`<div class="cityopen">${inner}</div>`:""}`;
 }
 function renderDay(){
+  if(!dayCid||!DAY[dayCid])return;
   const d=DAY[dayCid], c=CAREERS.find(x=>x.id===dayCid), steps=d.steps, n=steps.length;
   const decisions=steps.map((s,i)=>s.q?i:-1).filter(i=>i>=0);
   if(!dayFirm){renderPlaces(d,c);return;}
@@ -2362,7 +2368,67 @@ function copyCities(toJobs){
 ["jobLoc","jtc1","jtc2","jtc3"].forEach(id=>$(id).addEventListener("change",()=>copyCities(false)));
 // Builder setting: load the example student on start. Set to false before sharing with students.
 const START_WITH_EXAMPLE=false;
-if(START_WITH_EXAMPLE)$("loadExample").click();
+// ---- save answers on this device ----
+const SAVE_KEY="careerHelper.answers.v1";
+function collectState(){
+  return {v:1,major:$("major").value,year:$("year").value,showAll:$("showAll").checked,
+    interests:[...pickedInterests],skills:[...$("skills").querySelectorAll("input:checked")].map(i=>i.value),
+    prefs:Object.fromEntries(PREFS.map(([k])=>[k,+$("pref-"+k).value])),
+    tmin:$("tmin").value,tmax:$("tmax").value,onlyRange:$("onlyRange").checked,sortBy:$("sortBy").value,
+    loc:$("dayLoc").value,tc:["tc1","tc2","tc3"].map(id=>$(id).value),jobType:$("jobType").value};
+}
+let saveTimer=null;
+function saveSoon(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>{
+  const st=collectState();
+  try{localStorage.setItem(SAVE_KEY,JSON.stringify(st));$("savedNote").hidden=!st.major;}catch(_){}
+},300);}
+function restoreSaved(){
+  let st=null;
+  try{st=JSON.parse(localStorage.getItem(SAVE_KEY)||"null");}catch(_){st=null;}
+  if(!st||st.v!==1)return false;
+  if(MAJORS.includes(st.major))$("major").value=st.major;
+  if(["Freshman","Sophomore","Junior","Senior"].includes(st.year))$("year").value=st.year;
+  $("showAll").checked=!!st.showAll;
+  pickedInterests=new Set(st.interests||[]);buildInterests();
+  chips($("skills"),SKILLS,new Set(st.skills||[]),"sk");
+  PREFS.forEach(([k])=>{const v=st.prefs&&+st.prefs[k];if(v>=1&&v<=5)$("pref-"+k).value=v;});
+  if(st.tmin!==undefined)$("tmin").value=st.tmin;
+  if(st.tmax!==undefined)$("tmax").value=st.tmax;
+  $("onlyRange").checked=!!st.onlyRange;
+  if(st.sortBy==="fit"||st.sortBy==="pay")$("sortBy").value=st.sortBy;
+  syncProfile();
+  if(st.jobType==="intern"||st.jobType==="full")$("jobType").value=st.jobType;
+  if(st.loc&&[...$("dayLoc").options].some(o=>o.value===st.loc)){
+    $("dayLoc").value=st.loc;dayLocPicked=true;fillTopCities();
+    (st.tc||[]).forEach((m,i)=>{const el=$(["tc1","tc2","tc3"][i]);if(m&&[...el.options].some(o=>o.value===m))el.value=m;});
+    copyCities(true);
+  }
+  renderMatch();
+  $("savedNote").hidden=!$("major").value;
+  return true;
+}
+// Reset filters: keep the answers, clear the result filters.
+$("resetFilters").addEventListener("click",()=>{
+  $("sortBy").value="fit";$("onlyRange").checked=false;$("showAll").checked=false;
+  buildInterests();openCid=null;renderMatch();saveSoon();
+});
+// Start over: tap twice to confirm, then clear everything.
+let startOverArmed=null;
+$("startOver").addEventListener("click",e=>{
+  const b=e.currentTarget;
+  if(!startOverArmed){
+    b.textContent="Tap again to clear all answers";b.classList.add("armed");
+    startOverArmed=setTimeout(()=>{startOverArmed=null;b.textContent="Start over";b.classList.remove("armed");},4000);
+    return;
+  }
+  clearTimeout(startOverArmed);startOverArmed=null;
+  try{localStorage.removeItem(SAVE_KEY);}catch(_){}
+  location.reload();
+});
+document.addEventListener("change",saveSoon);
+$("quiz").addEventListener("input",saveSoon);
+$("loadExample").addEventListener("click",saveSoon);
+if(!restoreSaved()&&START_WITH_EXAMPLE)$("loadExample").click();
 </script>
 
 </body>
